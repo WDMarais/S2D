@@ -70,15 +70,19 @@ def createMaterial(name, color, whichType):
     mat = D.materials.get(name)
     if mat is None:
         mat = bpy.data.materials.new(name)
+    if len(color) == 3:
+        cList = list(color)
+        cList.append(1.0) ## add alpha channel - no transparency, fully opaque
+        color = tuple(cList)
     mat.diffuse_color = color
-    mat.diffuse_intensity = 1
+    mat.specular_intensity = 1.0
     mat.type = whichType
     mat.emit = 0.5
     return mat
 
 def clearAllObjects():
     for o in bpy.data.objects:
-        o.select = True
+        o.select_set(True)
     bpy.ops.object.delete(use_global=False)
 
     for m in bpy.data.materials:
@@ -96,7 +100,7 @@ def addVertexObj(name, location):
 
     verts = vObj.data.vertices
     for i in range(1, 4):
-        verts[i].select = True
+        verts[i].select_set(True)
     opObj.mode_set(mode="EDIT")
     O.mesh.delete(type="VERT")
     opObj.mode_set(mode="OBJECT")
@@ -142,13 +146,13 @@ def addSolarSail(name, size, location = (5, 5, 5)):
     A.scale = [1.0, 1.0, 0.2]
     O.transform.rotate(value=(-np.pi/2), axis=(0.0, 1.0, 0.0), constraint_axis=(False, True, False), constraint_orientation='GLOBAL', mirror=False, proportional='DISABLED', proportional_edit_falloff='SMOOTH', proportional_size=1)
     A.location = location + sailDisplacement
-    O.mesh.primitive_uv_sphere_add(size=size, location=location)
+    O.mesh.primitive_uv_sphere_add(scale=(size, size, size), location=location)
     B = C.active_object
     O.object.shade_smooth()
     B.name = name
 
-    A.select = True
-    B.select = True
+    A.select_set(True)
+    B.select_set(True)
     O.object.join()
 
 def addActiveBody(name, location, graphics, blenderUnits):
@@ -163,7 +167,7 @@ def addActiveBody(name, location, graphics, blenderUnits):
     color = cList[c]
 
     if (r == "SPHERE"):
-        O.mesh.primitive_uv_sphere_add(size=s, location=location)
+        O.mesh.primitive_uv_sphere_add(scale=(s, s, s), location=location)
         O.object.shade_smooth()
     elif (r == "SOLSAT"):
         addSolarSail(name, s, location)
