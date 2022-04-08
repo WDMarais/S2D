@@ -8,7 +8,6 @@ from spaceBodies import solarSailSatellite
 import numpy as np
 import json
 from scipy.constants import au
-import mathutils
 from math import radians
 
 from miscConstants import MAIN_JSON

@@ -1,3 +1,3 @@
 #!/bin/bash
-python3 simulation.py
-blender -b -P rendering.py
+python3 sim.py
+blender -P render.py

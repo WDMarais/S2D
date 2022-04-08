@@ -230,15 +230,16 @@ rotArray = np.zeros(raShape)
 sceneDataPath = generalSettings["storeParentDir"] + "/" + sceneName
 for b, body in enumerate(flatBD):
     name = body["name"]
-    posFile = name + "/Pos.dat"
-    rotFile = name + "/Rot.dat"
-    posArray[b] = np.genfromtxt(sceneDataPath + "/" + posFile, delimiter=',')
-    rotArray[b] = np.genfromtxt(sceneDataPath + "/" + rotFile, delimiter=',')
+    posFilePath = f"{sceneDataPath}/{name}/Pos.dat"
+    rotFilePath = f"{sceneDataPath}/{name}/Rot.dat"
+    posArray[b] = np.genfromtxt(posFilePath, delimiter=',')
+    rotArray[b] = np.genfromtxt(rotFilePath, delimiter=',')
     print("Loaded", name, "data")
 
 viewCenter = scene["viewCenter"]
 if not(viewCenter == 'Origin'):
-    centerPosArray = np.genfromtxt(sceneDataPath + "/"+viewCenter +"/Pos.dat", delimiter=',')
+    centerPath = f"{sceneDataPath}/{viewCenter}/Pos.dat"
+    centerPosArray = np.genfromtxt(centerPath, delimiter=',')
     for b, body in enumerate(flatBD):
         posArray[b] -= centerPosArray
 

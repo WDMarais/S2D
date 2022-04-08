@@ -1,3 +1,4 @@
+
 # Compiled source #
 ###################
 *.com
@@ -7,7 +8,8 @@
 
 # Directories #
 ###############
-scenes/
+PlanetarySim/
+Scenes/
 Kepler/
 renders/
 movies/

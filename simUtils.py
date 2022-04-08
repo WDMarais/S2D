@@ -1,7 +1,6 @@
 from spaceBodies import spaceBody
 from spaceBodies import thrustSatellite
 from spaceBodies import solarSailSatellite
-import mathutils
 import numpy as np
 from math import radians
 
